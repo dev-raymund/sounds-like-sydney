@@ -1,0 +1,15 @@
+# Copyright (C) 2026 Sounds Like Sydney
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Sounds Like Sydney 2026 1.0.0\n"
+"Report-Msgid-Bugs-To: https://soundslikesydney.com/\n"
+"POT-Creation-Date: 2026-07-08T00:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: Sounds Like Sydney\n"
+"X-Domain: soundslikesydney2026\n"
+
+# Regenerate with WP-CLI:
+#   wp i18n make-pot . languages/soundslikesydney2026.pot --domain=soundslikesydney2026

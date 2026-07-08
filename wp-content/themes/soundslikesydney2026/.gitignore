@@ -1,0 +1,13 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+
+# Node / build (if you add a toolchain later)
+node_modules/
+.cache/
+*.map
+
+# Do NOT ignore acf-json/ — those files ARE the field definitions.
+!acf-json/
+!acf-json/*.json

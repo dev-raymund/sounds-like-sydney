@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "sls2026/featured-grid",
+	"title": "Featured Grid",
+	"description": "A curated grid of featured stories. Pick posts and a heading in the sidebar; the theme renders the magazine card layout.",
+	"category": "sls2026",
+	"icon": "grid-view",
+	"keywords": [ "featured", "grid", "posts", "editorial" ],
+	"textdomain": "soundslikesydney2026",
+	"supports": {
+		"align": [ "wide", "full" ],
+		"anchor": true,
+		"jsx": false
+	},
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php"
+	},
+	"example": {
+		"attributes": {
+			"mode": "preview",
+			"data": {
+				"heading": "Featured"
+			}
+		}
+	}
+}

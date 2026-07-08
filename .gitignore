@@ -1,0 +1,32 @@
+# =====================================================================
+# WordPress project .gitignore
+# =====================================================================
+
+# --- SECRETS — never commit (DB credentials + auth salts) ---
+/wp-config.php
+
+# --- User uploads (media; large & regenerable). Remove this line to track media. ---
+/wp-content/uploads/
+
+# --- Drop-ins / caches / upgrades ---
+/wp-content/cache/
+/wp-content/upgrade/
+/wp-content/advanced-cache.php
+/wp-content/object-cache.php
+/wp-content/db.php
+
+# --- Logs ---
+*.log
+/wp-content/debug.log
+
+# --- OS / editor cruft ---
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# --- Node / build tooling (if added later) ---
+node_modules/
+.cache/

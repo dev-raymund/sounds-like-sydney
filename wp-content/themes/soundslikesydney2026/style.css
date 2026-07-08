@@ -1,0 +1,46 @@
+/*
+Theme Name:        Sounds Like Sydney 2026
+Theme URI:         https://soundslikesydney.com/
+Author:            Sounds Like Sydney
+Author URI:        https://soundslikesydney.com/
+Description:       A modern editorial / news-magazine theme for Sounds Like Sydney. Built as a classic PHP-template theme and structured for first-class Advanced Custom Fields (ACF) integration via Local JSON, ACF Blocks and Options pages. Homepage layout inspired by a magazine grid: hero, editor's choice, recent posts with sidebar, video, latest posts and trending articles.
+Requires at least: 6.0
+Tested up to:      7.0
+Requires PHP:      7.4
+Version:           1.0.0
+License:           GNU General Public License v2 or later
+License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain:       soundslikesydney2026
+Tags:              news, magazine, blog, editorial, custom-menu, featured-images, footer-widgets, translation-ready, block-styles, wide-blocks
+
+Sounds Like Sydney 2026 is distributed under the terms of the GNU GPL v2 or later.
+
+All primary styles live in /assets/css/. This file only carries the required
+theme header plus a small set of design tokens so the theme still renders if
+the enqueued stylesheet fails to load.
+*/
+
+/* -------------------------------------------------------------------------
+ * Design tokens (mirrored in assets/css/main.css :root)
+ * Kept here as a safe fallback only.
+ * ---------------------------------------------------------------------- */
+:root {
+	--sls-color-accent: #ff3d1a;
+	--sls-color-ink: #14181f;
+	--sls-color-body: #4a4f57;
+	--sls-color-muted: #8a9099;
+	--sls-color-line: #e7e9ec;
+	--sls-color-bg: #ffffff;
+	--sls-color-bg-alt: #f4f5f6;
+	--sls-color-dark: #14181f;
+	--sls-font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+	--sls-font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	--sls-container: 1200px;
+}
+
+body {
+	margin: 0;
+	font-family: var(--sls-font-sans);
+	color: var(--sls-color-body);
+	background: var(--sls-color-bg);
+}
