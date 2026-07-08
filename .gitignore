@@ -18,6 +18,15 @@
 # --- Logs ---
 *.log
 /wp-content/debug.log
+/error_log
+
+# --- WPvivid backup / migration artifacts (can be GBs; GitHub rejects files >100MB) ---
+/wp-content/wpvividbackups/
+/wp-content/wpvivid_staging/
+/wp-content/wpvivid_uploads/
+
+# --- WP Super Cache generated config ---
+/wp-content/wp-cache-config.php
 
 # --- OS / editor cruft ---
 .DS_Store

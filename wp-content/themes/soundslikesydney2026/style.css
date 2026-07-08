@@ -33,7 +33,7 @@ the enqueued stylesheet fails to load.
 	--sls-color-bg: #ffffff;
 	--sls-color-bg-alt: #f4f5f6;
 	--sls-color-dark: #14181f;
-	--sls-font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+	--sls-font-display: "Oswald", "Arial Narrow", "Helvetica Neue Condensed", "Franklin Gothic Medium", system-ui, sans-serif;
 	--sls-font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 	--sls-container: 1200px;
 }

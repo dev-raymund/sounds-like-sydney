@@ -13,7 +13,8 @@
 .editor-styles-wrapper h2,
 .editor-styles-wrapper h3,
 .editor-styles-wrapper h4 {
-	font-family: "Playfair Display", Georgia, serif;
+	font-family: "Oswald", "Arial Narrow", "Franklin Gothic Medium", system-ui, sans-serif;
+	font-weight: 700;
 	color: var(--sls-color-ink);
 }
 
