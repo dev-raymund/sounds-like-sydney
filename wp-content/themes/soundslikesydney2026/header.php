@@ -27,9 +27,6 @@
 	<header id="masthead" class="site-header">
 
 		<?php
-		// Thin top bar: social links + secondary links.
-		get_template_part( 'template-parts/header/top-bar' );
-
 		// Logo / site title + search toggle.
 		get_template_part( 'template-parts/header/site-branding' );
 

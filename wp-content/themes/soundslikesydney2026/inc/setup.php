@@ -48,7 +48,6 @@ function sls2026_setup() {
 	register_nav_menus(
 		array(
 			'primary' => __( 'Primary Menu', 'soundslikesydney2026' ),
-			'top-bar' => __( 'Top Bar Menu', 'soundslikesydney2026' ),
 			'footer'  => __( 'Footer Menu', 'soundslikesydney2026' ),
 			'social'  => __( 'Social Links Menu', 'soundslikesydney2026' ),
 		)
