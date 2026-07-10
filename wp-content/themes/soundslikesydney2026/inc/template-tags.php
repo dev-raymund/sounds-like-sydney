@@ -64,6 +64,49 @@ if ( ! function_exists( 'sls2026_primary_category' ) ) {
 	}
 }
 
+if ( ! function_exists( 'sls2026_category_list' ) ) {
+	/**
+	 * Print up to $limit categories as a comma-separated kicker
+	 * (e.g. "FEATURED, HEALTH"), matching the reference hero.
+	 *
+	 * @param int|null $post_id Optional post ID.
+	 * @param int      $limit   Max categories to show.
+	 */
+	function sls2026_category_list( $post_id = null, $limit = 2 ) {
+		$post_id    = $post_id ? $post_id : get_the_ID();
+		$categories = get_the_category( $post_id );
+		if ( empty( $categories ) ) {
+			return;
+		}
+		$categories = array_slice( $categories, 0, max( 1, (int) $limit ) );
+		$links      = array();
+		foreach ( $categories as $cat ) {
+			$links[] = sprintf(
+				'<a href="%1$s">%2$s</a>',
+				esc_url( get_category_link( $cat->term_id ) ),
+				esc_html( $cat->name )
+			);
+		}
+		echo '<span class="entry-kicker">' . implode( ', ', $links ) . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- links escaped above.
+	}
+}
+
+if ( ! function_exists( 'sls2026_comment_badge' ) ) {
+	/**
+	 * Print a small comment-count badge with a speech-bubble icon.
+	 *
+	 * @param int|null $post_id Optional post ID.
+	 */
+	function sls2026_comment_badge( $post_id = null ) {
+		$post_id = $post_id ? $post_id : get_the_ID();
+		$count   = get_comments_number( $post_id );
+		printf(
+			'<span class="entry-comments"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.38 8.38 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>%s</span>',
+			esc_html( number_format_i18n( $count ) )
+		);
+	}
+}
+
 if ( ! function_exists( 'sls2026_entry_meta' ) ) {
 	/**
 	 * Print a compact meta row: author + date.
