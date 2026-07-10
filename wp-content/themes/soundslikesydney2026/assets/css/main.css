@@ -20,9 +20,9 @@
 	--sls-color-dark: #14181f;
 	--sls-color-dark-2: #1c2029;
 
-	/* Display face — bold condensed sans that echoes the logo wordmark. */
-	--sls-font-display: "Oswald", "Arial Narrow", "Helvetica Neue Condensed", "Franklin Gothic Medium", system-ui, sans-serif;
-	--sls-font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	/* Site-wide serif — Ibarra Real Nova for both display and body. */
+	--sls-font-display: "Ibarra Real Nova", Georgia, "Times New Roman", serif;
+	--sls-font-sans: "Ibarra Real Nova", Georgia, "Times New Roman", serif;
 
 	--sls-container: 1200px;
 	--sls-gap: 28px;
@@ -40,6 +40,7 @@ body {
 	margin: 0;
 	font-family: var(--sls-font-sans);
 	font-size: 16px;
+	font-weight: bold;
 	line-height: 1.65;
 	color: var(--sls-color-body);
 	background: var(--sls-color-bg);
@@ -158,7 +159,7 @@ p { margin: 0 0 1.2em; }
 	font-size: clamp(30px, 5vw, 46px);
 	font-weight: 700;
 	text-transform: uppercase;
-	letter-spacing: -0.005em;
+	letter-spacing: normal;
 	line-height: 1;
 	margin: 0;
 }
@@ -548,16 +549,56 @@ body.sls-search-open { overflow: hidden; }
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	gap: var(--sls-gap);
-	counter-reset: ec;
 }
-.sls-editors__item { position: relative; }
-.sls-editors__num {
-	font-family: var(--sls-font-display);
-	font-size: 40px;
-	line-height: 1;
-	color: var(--sls-color-line);
+.sls-editors__media {
 	display: block;
-	margin-bottom: 6px;
+	overflow: hidden;
+	border-radius: var(--sls-radius);
+	background: var(--sls-color-bg-alt);
+	margin-bottom: 14px;
+}
+.sls-editors__media img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; transition: transform .5s ease; }
+.sls-editors__item:hover .sls-editors__media img { transform: scale(1.04); }
+.sls-editors__meta { display: flex; gap: 12px; align-items: flex-start; }
+.sls-editors__num {
+	flex: none;
+	font-family: var(--sls-font-display);
+	font-size: 34px;
+	line-height: .85;
+	font-weight: 700;
+	color: var(--sls-color-muted);
+	opacity: .4;
+}
+.sls-editors__text { min-width: 0; }
+.sls-editors__text .sls-card__title { font-size: 16px; line-height: 1.3; margin: 6px 0 0; }
+
+/* Animated hover underline on headline links — wipes in left → right */
+.sls-card__title a,
+.sls-hcard__title a,
+.sls-hlead__title a,
+.sls-hitem__title a,
+.sls-video__title a {
+	background-image: linear-gradient( currentColor, currentColor );
+	background-repeat: no-repeat;
+	background-position: 0 100%;
+	background-size: 0% 2px;
+	transition: background-size .45s ease;
+	padding-bottom: 3px;
+}
+.sls-card__title a:hover,
+.sls-hcard__title a:hover,
+.sls-hlead__title a:hover,
+.sls-hitem__title a:hover,
+.sls-video__title a:hover {
+	background-size: 100% 2px;
+	color: inherit; /* keep text colour; the growing underline is the effect */
+}
+@media (prefers-reduced-motion: reduce) {
+	.sls-card__title a,
+	.sls-hcard__title a,
+	.sls-hlead__title a,
+	.sls-hitem__title a,
+	.sls-video__title a { transition: none; }
 }
 
 /* Recent posts + sidebar */

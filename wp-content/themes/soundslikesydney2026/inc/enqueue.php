@@ -12,16 +12,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Google Fonts URL for the theme.
  *
- * Oswald  — bold condensed grotesque used for display/headings; echoes the
- *           "SOUNDS LIKE SYDNEY" logo wordmark.
- * Inter   — clean neutral sans for body copy and meta.
+ * Ibarra Real Nova — an elegant text serif used site-wide for headings and body.
+ * Loaded with roman + italic across weights 400–700.
  *
  * Filterable so the pairing can be swapped (or the fonts self-hosted) later.
  *
  * @return string
  */
 function sls2026_fonts_url() {
-	$url = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap';
+	$url = 'https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap';
 	return apply_filters( 'sls2026_fonts_url', $url );
 }
 
@@ -61,8 +60,8 @@ function sls2026_asset_version( $relative_path ) {
  * Front-end styles and scripts.
  */
 function sls2026_enqueue_assets() {
-	// Web fonts (Oswald display + Inter body) — mirrors the logo. Loaded first
-	// so main.css can depend on it. Version null: external, don't cache-bust.
+	// Web font (Ibarra Real Nova, site-wide). Loaded first so main.css can
+	// depend on it. Version null: external, don't cache-bust.
 	wp_enqueue_style( 'sls2026-fonts', sls2026_fonts_url(), array(), null );
 
 	// Main stylesheet (the real design lives here; style.css is just the header + fallback tokens).
