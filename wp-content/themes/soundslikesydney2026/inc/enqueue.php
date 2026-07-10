@@ -45,6 +45,19 @@ function sls2026_resource_hints( $hints, $relation ) {
 add_filter( 'wp_resource_hints', 'sls2026_resource_hints', 10, 2 );
 
 /**
+ * Cache-busting version for a theme-owned asset: its file modification time,
+ * so CSS/JS edits appear immediately with no manual version bumps. Falls back
+ * to the theme version if the file can't be found.
+ *
+ * @param string $relative_path Path relative to the theme root (e.g. '/assets/css/main.css').
+ * @return string
+ */
+function sls2026_asset_version( $relative_path ) {
+	$file = SLS2026_DIR . $relative_path;
+	return file_exists( $file ) ? (string) filemtime( $file ) : SLS2026_VERSION;
+}
+
+/**
  * Front-end styles and scripts.
  */
 function sls2026_enqueue_assets() {
@@ -57,7 +70,7 @@ function sls2026_enqueue_assets() {
 		'sls2026-main',
 		SLS2026_URI . '/assets/css/main.css',
 		array( 'sls2026-fonts' ),
-		SLS2026_VERSION
+		sls2026_asset_version( '/assets/css/main.css' )
 	);
 
 	// Required root stylesheet so WordPress recognises theme metadata; loaded after main.
@@ -65,7 +78,7 @@ function sls2026_enqueue_assets() {
 		'sls2026-style',
 		get_stylesheet_uri(),
 		array( 'sls2026-main' ),
-		SLS2026_VERSION
+		sls2026_asset_version( '/style.css' )
 	);
 
 	// Navigation / interaction JS, deferred, no jQuery dependency.
@@ -73,7 +86,7 @@ function sls2026_enqueue_assets() {
 		'sls2026-navigation',
 		SLS2026_URI . '/assets/js/navigation.js',
 		array(),
-		SLS2026_VERSION,
+		sls2026_asset_version( '/assets/js/navigation.js' ),
 		true
 	);
 
@@ -81,7 +94,7 @@ function sls2026_enqueue_assets() {
 		'sls2026-main',
 		SLS2026_URI . '/assets/js/main.js',
 		array(),
-		SLS2026_VERSION,
+		sls2026_asset_version( '/assets/js/main.js' ),
 		true
 	);
 
@@ -101,7 +114,7 @@ function sls2026_enqueue_editor_assets() {
 		'sls2026-editor',
 		SLS2026_URI . '/assets/css/editor.css',
 		array( 'sls2026-fonts' ),
-		SLS2026_VERSION
+		sls2026_asset_version( '/assets/css/editor.css' )
 	);
 }
 add_action( 'enqueue_block_editor_assets', 'sls2026_enqueue_editor_assets' );
