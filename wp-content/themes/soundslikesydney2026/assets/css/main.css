@@ -338,7 +338,7 @@ body.sls-search-open { overflow: hidden; }
 	border-bottom: 1px solid var(--sls-color-line);
 	font-size: 13px;
 }
-.sls-trending__inner { display: flex; align-items: center; gap: 16px; min-height: 44px; overflow: hidden; }
+.sls-trending__inner { display: flex; align-items: center; gap: 16px; min-height: 44px; }
 .sls-trending__label {
 	flex: none;
 	font-weight: 700;
@@ -348,13 +348,39 @@ body.sls-search-open { overflow: hidden; }
 	font-size: 11px;
 }
 .sls-trending__list {
+	flex: 1 1 auto;
 	display: flex;
 	gap: 28px;
 	list-style: none;
 	margin: 0; padding: 0;
-	white-space: nowrap;
-	overflow: hidden;
+	overflow-x: auto;
+	scroll-behavior: smooth;
+	scrollbar-width: none;          /* Firefox */
+	-ms-overflow-style: none;       /* old Edge */
 }
+.sls-trending__list::-webkit-scrollbar { display: none; } /* WebKit */
+.sls-trending__list > li { flex: none; white-space: nowrap; }
+.sls-trending__nav { flex: none; display: flex; gap: 6px; }
+.sls-trending__arrow {
+	width: 30px;
+	height: 30px;
+	display: inline-grid;
+	place-items: center;
+	background: none;
+	border: 1px solid var(--sls-color-line);
+	border-radius: 50%;
+	color: var(--sls-color-ink);
+	font-size: 14px;
+	line-height: 1;
+	cursor: pointer;
+	transition: background .2s, color .2s, border-color .2s;
+}
+.sls-trending__arrow:hover:not(:disabled) {
+	background: var(--sls-color-accent);
+	border-color: var(--sls-color-accent);
+	color: #fff;
+}
+.sls-trending__arrow:disabled { opacity: .35; cursor: default; }
 
 /* =========================================================================
  * 4. Cards (shared)
