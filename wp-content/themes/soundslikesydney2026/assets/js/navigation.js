@@ -2,6 +2,7 @@
  * Header interactions:
  *   - mobile menu toggle
  *   - full-screen search overlay (open/close, Escape, backdrop click, focus)
+ *   - compact sticky header reveal on scroll
  * Vanilla JS, no dependencies.
  */
 ( function () {
@@ -22,25 +23,32 @@
 	}
 
 	/**
-	 * Full-screen search overlay.
+	 * Full-screen search overlay. Supports multiple triggers (header + sticky).
 	 */
 	function initSearch() {
-		var toggle = document.querySelector( '.sls-search-toggle' );
-		var panel  = document.getElementById( 'sls-search-panel' );
-		if ( ! toggle || ! panel ) {
+		var toggles = document.querySelectorAll( '.sls-search-toggle' );
+		var panel   = document.getElementById( 'sls-search-panel' );
+		if ( ! toggles.length || ! panel ) {
 			return;
 		}
 
-		var field = panel.querySelector( '.sls-search-field' );
-		var close = panel.querySelector( '.sls-search-close' );
+		var field      = panel.querySelector( '.sls-search-field' );
+		var close       = panel.querySelector( '.sls-search-close' );
+		var lastToggle = null;
 
-		function open() {
+		function setExpanded( value ) {
+			Array.prototype.forEach.call( toggles, function ( t ) {
+				t.setAttribute( 'aria-expanded', String( value ) );
+			} );
+		}
+
+		function open( trigger ) {
+			lastToggle = trigger || toggles[ 0 ];
 			panel.hidden = false;
-			// Let the browser paint `hidden=false` before adding the transition class.
 			window.requestAnimationFrame( function () {
 				panel.classList.add( 'is-open' );
 			} );
-			toggle.setAttribute( 'aria-expanded', 'true' );
+			setExpanded( true );
 			document.body.classList.add( 'sls-search-open' );
 			if ( field ) {
 				field.focus();
@@ -49,42 +57,76 @@
 
 		function hide() {
 			panel.classList.remove( 'is-open' );
-			toggle.setAttribute( 'aria-expanded', 'false' );
+			setExpanded( false );
 			document.body.classList.remove( 'sls-search-open' );
-			// Wait for the fade-out before removing from the a11y tree.
 			window.setTimeout( function () {
 				if ( ! panel.classList.contains( 'is-open' ) ) {
 					panel.hidden = true;
 				}
 			}, 250 );
-			toggle.focus();
+			if ( lastToggle ) {
+				lastToggle.focus();
+			}
 		}
 
-		toggle.addEventListener( 'click', function () {
-			if ( panel.classList.contains( 'is-open' ) ) {
-				hide();
-			} else {
-				open();
-			}
+		Array.prototype.forEach.call( toggles, function ( t ) {
+			t.addEventListener( 'click', function () {
+				if ( panel.classList.contains( 'is-open' ) ) {
+					hide();
+				} else {
+					open( t );
+				}
+			} );
 		} );
 
 		if ( close ) {
 			close.addEventListener( 'click', hide );
 		}
 
-		// Click on the dark backdrop (but not the form/close inside) closes.
 		panel.addEventListener( 'click', function ( event ) {
 			if ( event.target === panel ) {
 				hide();
 			}
 		} );
 
-		// Escape closes when open.
 		document.addEventListener( 'keydown', function ( event ) {
 			if ( ( event.key === 'Escape' || event.key === 'Esc' ) && panel.classList.contains( 'is-open' ) ) {
 				hide();
 			}
 		} );
+	}
+
+	/**
+	 * Reveal the compact sticky header once the main masthead is scrolled past.
+	 */
+	function initStickyHeader() {
+		var header   = document.querySelector( '[data-sticky-header]' );
+		var masthead = document.getElementById( 'masthead' );
+		if ( ! header ) {
+			return;
+		}
+
+		var trigger = masthead ? masthead.offsetHeight : 300;
+		var ticking = false;
+
+		function update() {
+			header.classList.toggle( 'is-visible', window.pageYOffset > trigger );
+			ticking = false;
+		}
+
+		window.addEventListener( 'scroll', function () {
+			if ( ! ticking ) {
+				window.requestAnimationFrame( update );
+				ticking = true;
+			}
+		}, { passive: true } );
+
+		window.addEventListener( 'resize', function () {
+			trigger = masthead ? masthead.offsetHeight : 300;
+			update();
+		} );
+
+		update();
 	}
 
 	document.addEventListener( 'DOMContentLoaded', function () {
@@ -94,5 +136,6 @@
 			'is-open'
 		);
 		initSearch();
+		initStickyHeader();
 	} );
 }() );
