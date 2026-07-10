@@ -1,17 +1,16 @@
 <?php
 /**
- * Footer widget area: brand column + up to four widget columns, with an
- * optional newsletter block sourced from ACF options.
+ * Footer top: brand logo · Categories · Links · Newsletter.
+ *
+ * The two middle columns use the footer-1 / footer-2 widget areas when filled,
+ * and fall back to a category list / footer menu so the footer matches the
+ * reference out of the box.
  *
  * @package SoundsLikeSydney2026
  */
 
-$sls_has_widgets = is_active_sidebar( 'footer-1' ) || is_active_sidebar( 'footer-2' )
-	|| is_active_sidebar( 'footer-3' ) || is_active_sidebar( 'footer-4' );
-
 $sls_newsletter_title = sls2026_option( 'newsletter_title', __( 'Newsletter', 'soundslikesydney2026' ) );
-$sls_newsletter_text  = sls2026_option( 'newsletter_text', __( 'Sign up for the latest from Sounds Like Sydney.', 'soundslikesydney2026' ) );
-$sls_newsletter_embed = sls2026_option( 'newsletter_embed' ); // Raw form HTML from a provider.
+$sls_newsletter_embed = sls2026_option( 'newsletter_embed' ); // Raw provider markup.
 ?>
 <div class="sls-footer-top">
 	<div class="sls-container sls-footer-top__inner">
@@ -22,46 +21,82 @@ $sls_newsletter_embed = sls2026_option( 'newsletter_embed' ); // Raw form HTML f
 				the_custom_logo();
 			} else {
 				printf(
-					'<span class="site-title site-title--footer">%s</span>',
+					'<a class="site-title site-title--footer" href="%1$s" rel="home">%2$s</a>',
+					esc_url( home_url( '/' ) ),
 					esc_html( get_bloginfo( 'name' ) )
 				);
-			}
-			$sls_footer_about = sls2026_option( 'footer_about', get_bloginfo( 'description' ) );
-			if ( $sls_footer_about ) {
-				echo '<p class="sls-footer-brand__about">' . esc_html( $sls_footer_about ) . '</p>';
 			}
 			?>
 		</div>
 
-		<?php if ( $sls_has_widgets ) : ?>
-			<div class="sls-footer-cols">
-				<?php for ( $sls_i = 1; $sls_i <= 4; $sls_i++ ) : ?>
-					<?php if ( is_active_sidebar( 'footer-' . $sls_i ) ) : ?>
-						<div class="sls-footer-col sls-footer-col--<?php echo (int) $sls_i; ?>">
-							<?php dynamic_sidebar( 'footer-' . $sls_i ); ?>
-						</div>
-					<?php endif; ?>
-				<?php endfor; ?>
-			</div>
-		<?php endif; ?>
+		<div class="sls-footer-col">
+			<?php
+			if ( is_active_sidebar( 'footer-1' ) ) {
+				dynamic_sidebar( 'footer-1' );
+			} else {
+				echo '<h3 class="widget-title"><span>' . esc_html__( 'Categories', 'soundslikesydney2026' ) . '</span></h3>';
+				echo '<ul class="sls-footer-list">';
+				wp_list_categories(
+					array(
+						'title_li' => '',
+						'number'   => 5,
+						'orderby'  => 'count',
+						'order'    => 'DESC',
+					)
+				);
+				echo '</ul>';
+			}
+			?>
+		</div>
+
+		<div class="sls-footer-col">
+			<?php
+			if ( is_active_sidebar( 'footer-2' ) ) {
+				dynamic_sidebar( 'footer-2' );
+			} else {
+				echo '<h3 class="widget-title"><span>' . esc_html__( 'Links', 'soundslikesydney2026' ) . '</span></h3>';
+				if ( has_nav_menu( 'footer' ) ) {
+					wp_nav_menu(
+						array(
+							'theme_location' => 'footer',
+							'menu_class'     => 'sls-footer-list',
+							'container'      => false,
+							'depth'          => 1,
+						)
+					);
+				} else {
+					echo '<ul class="sls-footer-list">';
+					wp_list_pages( array( 'title_li' => '', 'number' => 5 ) );
+					echo '</ul>';
+				}
+			}
+			?>
+		</div>
 
 		<div class="sls-footer-newsletter">
 			<h3 class="widget-title"><span><?php echo esc_html( $sls_newsletter_title ); ?></span></h3>
-			<?php if ( $sls_newsletter_text ) : ?>
-				<p class="sls-footer-newsletter__text"><?php echo esc_html( $sls_newsletter_text ); ?></p>
-			<?php endif; ?>
 			<?php
 			if ( $sls_newsletter_embed ) {
-				// Provider-supplied markup (Mailchimp, etc.). Editors control this via ACF.
 				echo wp_kses_post( $sls_newsletter_embed );
 			} else {
 				?>
 				<form class="sls-newsletter-form" action="#" method="post" novalidate>
-					<label class="screen-reader-text" for="sls-newsletter-email">
-						<?php esc_html_e( 'Email address', 'soundslikesydney2026' ); ?>
+					<div class="sls-newsletter-field">
+						<label class="screen-reader-text" for="sls-newsletter-email">
+							<?php esc_html_e( 'Email address', 'soundslikesydney2026' ); ?>
+						</label>
+						<input id="sls-newsletter-email" type="email" name="email" placeholder="<?php esc_attr_e( 'Enter Your Email', 'soundslikesydney2026' ); ?>" required>
+						<button type="submit" class="sls-newsletter-submit">
+							<span class="sls-newsletter-submit__icon" aria-hidden="true">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
+							</span>
+							<span class="sls-newsletter-submit__text"><?php esc_html_e( 'Subscribe', 'soundslikesydney2026' ); ?></span>
+						</button>
+					</div>
+					<label class="sls-newsletter-agree">
+						<input type="checkbox" name="agree" required>
+						<span><?php esc_html_e( 'I agree that my submitted data is being collected and stored.', 'soundslikesydney2026' ); ?></span>
 					</label>
-					<input id="sls-newsletter-email" type="email" name="email" placeholder="<?php esc_attr_e( 'Enter your email', 'soundslikesydney2026' ); ?>" required>
-					<button type="submit"><?php esc_html_e( 'Subscribe', 'soundslikesydney2026' ); ?></button>
 				</form>
 				<?php
 			}

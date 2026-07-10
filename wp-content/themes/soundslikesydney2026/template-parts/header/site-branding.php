@@ -9,10 +9,13 @@
 <div class="sls-branding">
 	<div class="sls-container sls-branding__inner">
 
-		<button class="sls-nav-toggle" aria-controls="primary-menu" aria-expanded="false">
-			<span class="sls-nav-toggle__bars" aria-hidden="true"></span>
-			<span class="screen-reader-text"><?php esc_html_e( 'Menu', 'soundslikesydney2026' ); ?></span>
-		</button>
+		<div class="sls-branding__left">
+			<button class="sls-nav-toggle" aria-controls="primary-menu" aria-expanded="false">
+				<span class="sls-nav-toggle__bars" aria-hidden="true"></span>
+				<span class="screen-reader-text"><?php esc_html_e( 'Menu', 'soundslikesydney2026' ); ?></span>
+			</button>
+			<?php sls2026_social_links( array( 'class' => 'sls-social sls-social--header', 'show_label' => true ) ); ?>
+		</div>
 
 		<div class="sls-branding__logo">
 			<?php
@@ -30,10 +33,12 @@
 			?>
 		</div>
 
-		<button class="sls-search-toggle" aria-controls="sls-search-panel" aria-expanded="false">
-			<span class="sls-search-toggle__icon" aria-hidden="true"></span>
-			<span class="screen-reader-text"><?php esc_html_e( 'Search', 'soundslikesydney2026' ); ?></span>
-		</button>
+		<div class="sls-branding__right">
+			<button class="sls-search-toggle" aria-controls="sls-search-panel" aria-expanded="false">
+				<span class="sls-search-toggle__icon" aria-hidden="true"></span>
+				<span class="screen-reader-text"><?php esc_html_e( 'Search', 'soundslikesydney2026' ); ?></span>
+			</button>
+		</div>
 
 	</div>
 

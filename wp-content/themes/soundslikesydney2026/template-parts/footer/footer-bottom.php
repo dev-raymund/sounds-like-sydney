@@ -1,6 +1,6 @@
 <?php
 /**
- * Footer bottom bar: copyright + footer menu + social.
+ * Footer bottom bar: copyright (brand in accent) + labelled social icons.
  *
  * @package SoundsLikeSydney2026
  */
@@ -16,38 +16,24 @@ $sls_copyright = sls2026_option( 'footer_copyright' );
 				echo esc_html( $sls_copyright );
 			} else {
 				printf(
-					/* translators: 1: year, 2: site name. */
-					esc_html__( '&copy; %1$s %2$s. All rights reserved.', 'soundslikesydney2026' ),
-					esc_html( gmdate( 'Y' ) ),
-					esc_html( get_bloginfo( 'name' ) )
+					/* translators: 1: site name (accented), 2: year. */
+					wp_kses(
+						__( '<span class="sls-footer-copyright__brand">%1$s</span> &copy; %2$s. All Rights Reserved.', 'soundslikesydney2026' ),
+						array( 'span' => array( 'class' => array() ) )
+					),
+					esc_html( get_bloginfo( 'name' ) ),
+					esc_html( gmdate( 'Y' ) )
 				);
 			}
 			?>
 		</p>
 
 		<?php
-		if ( has_nav_menu( 'footer' ) ) {
-			wp_nav_menu(
-				array(
-					'theme_location' => 'footer',
-					'menu_class'     => 'sls-footer-menu',
-					'container'      => 'nav',
-					'container_class' => 'sls-footer-nav',
-					'depth'          => 1,
-				)
-			);
-		}
-
 		if ( has_nav_menu( 'social' ) ) {
-			wp_nav_menu(
+			sls2026_social_links(
 				array(
-					'theme_location'  => 'social',
-					'menu_class'      => 'sls-social-menu sls-social-menu--footer',
-					'container'       => 'div',
-					'container_class' => 'sls-footer-social',
-					'depth'           => 1,
-					'link_before'     => '<span class="screen-reader-text">',
-					'link_after'      => '</span>',
+					'class'      => 'sls-social sls-social--footer',
+					'show_label' => true,
 				)
 			);
 		}

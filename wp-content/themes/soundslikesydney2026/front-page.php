@@ -36,7 +36,6 @@ get_header();
 				'recent_posts'      => 'template-parts/homepage/recent-posts',
 				'recent_video'      => 'template-parts/homepage/recent-video',
 				'latest_posts'      => 'template-parts/homepage/latest-posts',
-				'trending_articles' => 'template-parts/homepage/trending-articles',
 			);
 			if ( isset( $sls_map[ $sls_layout ] ) ) {
 				get_template_part( $sls_map[ $sls_layout ] );
@@ -51,7 +50,6 @@ get_header();
 		get_template_part( 'template-parts/homepage/recent-posts' );
 		get_template_part( 'template-parts/homepage/recent-video' );
 		get_template_part( 'template-parts/homepage/latest-posts' );
-		get_template_part( 'template-parts/homepage/trending-articles' );
 	endif;
 	?>
 
