@@ -32,16 +32,12 @@ $sls_note_svg = '<svg class="sls-note-glyph" viewBox="0 0 24 24" aria-hidden="tr
 	<?php while ( have_posts() ) : the_post(); ?>
 
 	<!-- Hero ---------------------------------------------------------------->
-	<section class="sls-about__hero<?php echo has_post_thumbnail() ? '' : ' sls-about__hero--placeholder'; ?>" aria-label="<?php esc_attr_e( 'About Sounds Like Sydney', 'soundslikesydney2026' ); ?>">
-		<?php if ( has_post_thumbnail() ) : ?>
-			<?php the_post_thumbnail( 'sls2026-hero', array( 'class' => 'sls-about__hero-img' ) ); ?>
-		<?php else : ?>
-			<div class="sls-about__hero-inner">
-				<p class="entry-kicker sls-about__hero-kicker"><?php esc_html_e( 'About Us', 'soundslikesydney2026' ); ?></p>
-				<p class="sls-about__hero-tagline"><?php esc_html_e( 'Connecting with music.', 'soundslikesydney2026' ); ?></p>
-			</div>
-		<?php endif; ?>
-	</section>
+	<?php
+	set_query_var( 'sls_hero_kicker', __( 'About Us', 'soundslikesydney2026' ) );
+	set_query_var( 'sls_hero_tagline', __( 'Connecting with music.', 'soundslikesydney2026' ) );
+	set_query_var( 'sls_hero_label', __( 'About Sounds Like Sydney', 'soundslikesydney2026' ) );
+	get_template_part( 'template-parts/page-hero' );
+	?>
 
 	<!-- Intro / lead -------------------------------------------------------->
 	<section class="sls-section sls-about-intro">

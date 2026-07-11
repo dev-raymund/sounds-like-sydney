@@ -50,8 +50,25 @@
 		} );
 	}
 
+	/**
+	 * Auto-submit any form control marked [data-autosubmit] on change
+	 * (e.g. the News sort dropdown), so no separate button press is needed.
+	 * The button stays in the markup as a no-JS fallback.
+	 */
+	function initAutoSubmit() {
+		var controls = document.querySelectorAll( '[data-autosubmit]' );
+		Array.prototype.forEach.call( controls, function ( control ) {
+			control.addEventListener( 'change', function () {
+				if ( control.form ) {
+					control.form.submit();
+				}
+			} );
+		} );
+	}
+
 	document.addEventListener( 'DOMContentLoaded', function () {
 		document.documentElement.classList.add( 'js' );
 		initTrending();
+		initAutoSubmit();
 	} );
 }() );
