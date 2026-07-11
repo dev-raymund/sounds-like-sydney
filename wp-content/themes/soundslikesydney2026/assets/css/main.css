@@ -880,6 +880,103 @@ body.sls-search-open { overflow: hidden; }
 	.sls-post-grid--3 { grid-template-columns: repeat(3, 1fr); }
 }
 
+/* =========================================================================
+ * 11. Contact
+ * ====================================================================== */
+.sls-contact__body { padding-top: clamp(32px, 5vw, 56px); padding-bottom: clamp(8px, 2vw, 24px); }
+.sls-contact__grid { display: grid; gap: 40px; }
+
+.sls-contact__title { font-size: clamp(24px, 3.2vw, 34px); margin: 6px 0 16px; }
+.sls-contact__intro p { font-size: 17px; line-height: 1.7; }
+
+.sls-contact__points { list-style: none; margin: 22px 0; padding: 0; display: grid; gap: 14px; }
+.sls-contact__points li { position: relative; padding-left: 30px; font-size: 15px; line-height: 1.5; }
+.sls-contact__points li::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: .45em;
+	width: 14px;
+	height: 8px;
+	border-left: 2px solid var(--sls-color-accent);
+	border-bottom: 2px solid var(--sls-color-accent);
+	transform: rotate(-45deg);
+}
+.sls-contact__fineprint { font-size: 14px; color: var(--sls-color-muted); }
+.sls-contact__fineprint a { color: var(--sls-color-ink); text-decoration: underline; }
+.sls-contact__fineprint a:hover { color: var(--sls-color-accent); }
+
+/* Form card (styles Contact Form 7's default markup to match the theme). */
+.sls-contact__form {
+	background: var(--sls-color-bg-alt);
+	border-radius: var(--sls-radius);
+	padding: clamp(24px, 4vw, 40px);
+}
+.sls-contact .wpcf7-form p { margin: 0 0 20px; }
+.sls-contact .wpcf7-form label {
+	display: block;
+	font-family: var(--sls-font-sans);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+	color: var(--sls-color-ink);
+}
+.sls-contact .wpcf7-form-control-wrap { display: block; margin-top: 8px; }
+.sls-contact input.wpcf7-form-control,
+.sls-contact textarea.wpcf7-form-control {
+	width: 100%;
+	font-family: var(--sls-font-sans);
+	font-size: 16px;
+	color: var(--sls-color-ink);
+	background: var(--sls-color-bg);
+	border: 1px solid var(--sls-color-line);
+	border-radius: var(--sls-radius);
+	padding: 12px 14px;
+	transition: border-color .15s, box-shadow .15s;
+}
+.sls-contact input.wpcf7-form-control:focus,
+.sls-contact textarea.wpcf7-form-control:focus {
+	outline: none;
+	border-color: var(--sls-color-accent);
+	box-shadow: 0 0 0 3px rgba(255, 61, 26, .12);
+}
+.sls-contact textarea.wpcf7-form-control { min-height: 160px; resize: vertical; }
+.sls-contact input.wpcf7-submit {
+	display: inline-block;
+	width: auto;
+	font-family: var(--sls-font-sans);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	padding: 15px 34px;
+	border: 1px solid var(--sls-color-accent);
+	border-radius: var(--sls-radius);
+	background: var(--sls-color-accent);
+	color: var(--sls-color-accent-ink);
+	cursor: pointer;
+	transition: background .2s, color .2s, border-color .2s;
+}
+.sls-contact input.wpcf7-submit:hover {
+	background: var(--sls-color-ink);
+	border-color: var(--sls-color-ink);
+	color: #fff;
+}
+.sls-contact .wpcf7-not-valid-tip { font-family: var(--sls-font-sans); font-size: 13px; color: var(--sls-color-accent); margin-top: 6px; }
+.sls-contact .wpcf7-response-output {
+	margin: 20px 0 0 !important;
+	padding: 12px 16px;
+	border-radius: var(--sls-radius);
+	font-family: var(--sls-font-sans);
+	font-size: 14px;
+}
+.sls-contact .wpcf7-spinner { margin: 0 0 0 12px; }
+
+@media (min-width: 860px) {
+	.sls-contact__grid { grid-template-columns: 0.85fr 1.15fr; gap: 56px; align-items: start; }
+}
+
 /* 404 */
 .sls-error-404 { text-align: center; padding-block: 60px; }
 .sls-error-404__code { font-family: var(--sls-font-display); font-size: 96px; color: var(--sls-color-line); margin: 0; }
