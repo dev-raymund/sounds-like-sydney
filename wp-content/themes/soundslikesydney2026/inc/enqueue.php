@@ -12,7 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Google Fonts URL for the theme.
  *
- * Ibarra Real Nova — an elegant text serif used site-wide for headings and body.
+ * Ibarra Real Nova — an elegant text serif used for headings/display.
+ * Montserrat  — a clean geometric sans used for body copy and UI labels.
+ *
  * Loaded with roman + italic across weights 400–700.
  *
  * Filterable so the pairing can be swapped (or the fonts self-hosted) later.
@@ -20,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string
  */
 function sls2026_fonts_url() {
-	$url = 'https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap';
+	$url = 'https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap';
 	return apply_filters( 'sls2026_fonts_url', $url );
 }
 
