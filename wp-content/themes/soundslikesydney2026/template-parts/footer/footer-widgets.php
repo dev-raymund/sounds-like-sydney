@@ -73,7 +73,7 @@ $sls_newsletter_embed = sls2026_option( 'newsletter_embed' ); // Raw provider ma
 			?>
 		</div>
 
-		<div class="sls-footer-newsletter">
+		<div class="sls-footer-newsletter" id="sls-newsletter">
 			<h3 class="widget-title"><span><?php echo esc_html( $sls_newsletter_title ); ?></span></h3>
 			<?php
 			if ( $sls_newsletter_embed ) {

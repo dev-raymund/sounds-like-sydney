@@ -66,9 +66,111 @@
 		} );
 	}
 
+	/**
+	 * "Copy link" buttons: copy the post URL to the clipboard and flash
+	 * a brief "Copied" state on the button.
+	 */
+	function initCopyLink() {
+		var buttons = document.querySelectorAll( '[data-copy-url]' );
+		Array.prototype.forEach.call( buttons, function ( button ) {
+			button.addEventListener( 'click', function () {
+				var url = button.getAttribute( 'data-copy-url' );
+				if ( ! url || ! navigator.clipboard ) {
+					return;
+				}
+				navigator.clipboard.writeText( url ).then( function () {
+					button.classList.add( 'is-copied' );
+					window.setTimeout( function () {
+						button.classList.remove( 'is-copied' );
+					}, 1500 );
+				} );
+			} );
+		} );
+	}
+
+	/**
+	 * Like button: a lightweight client-side "like" persisted in localStorage
+	 * (no backend). Toggles the count by one and remembers per-post state.
+	 */
+	function initLike() {
+		var buttons = document.querySelectorAll( '.sls-like[data-like-key]' );
+		Array.prototype.forEach.call( buttons, function ( button ) {
+			var key = 'sls-like-' + button.getAttribute( 'data-like-key' );
+			var countEl = button.querySelector( '.sls-like__count' );
+			var base = parseInt( countEl.textContent, 10 ) || 0;
+			var liked = false;
+			try {
+				liked = window.localStorage.getItem( key ) === '1';
+			} catch ( e ) {}
+
+			function render() {
+				button.classList.toggle( 'is-liked', liked );
+				button.setAttribute( 'aria-pressed', liked ? 'true' : 'false' );
+				countEl.textContent = base + ( liked ? 1 : 0 );
+			}
+
+			button.addEventListener( 'click', function () {
+				liked = ! liked;
+				try {
+					window.localStorage.setItem( key, liked ? '1' : '0' );
+				} catch ( e ) {}
+				render();
+			} );
+
+			render();
+		} );
+	}
+
+	/**
+	 * Turn the sidebar Archives list into a compact dropdown that navigates to
+	 * the chosen month on change. Works for both classic (.widget_archive ul)
+	 * and block (.wp-block-archives-list) markup; the original list is the
+	 * no-JS fallback.
+	 */
+	function initArchivesDropdown() {
+		var lists = document.querySelectorAll(
+			'.sls-sidebar .wp-block-archives-list, .sls-sidebar .widget_archive ul'
+		);
+		Array.prototype.forEach.call( lists, function ( list ) {
+			var links = list.querySelectorAll( 'a' );
+			if ( links.length < 2 ) {
+				return;
+			}
+
+			var select = document.createElement( 'select' );
+			select.className = 'sls-archive-select';
+			select.setAttribute( 'aria-label', 'Archives' );
+
+			var placeholder = document.createElement( 'option' );
+			placeholder.textContent = 'Select Month';
+			placeholder.value = '';
+			placeholder.selected = true;
+			select.appendChild( placeholder );
+
+			Array.prototype.forEach.call( links, function ( a ) {
+				var opt = document.createElement( 'option' );
+				opt.value = a.href;
+				opt.textContent = a.textContent.replace( /\s+/g, ' ' ).trim();
+				select.appendChild( opt );
+			} );
+
+			select.addEventListener( 'change', function () {
+				if ( select.value ) {
+					window.location.href = select.value;
+				}
+			} );
+
+			list.parentNode.insertBefore( select, list );
+			list.parentNode.removeChild( list );
+		} );
+	}
+
 	document.addEventListener( 'DOMContentLoaded', function () {
 		document.documentElement.classList.add( 'js' );
 		initTrending();
 		initAutoSubmit();
+		initCopyLink();
+		initLike();
+		initArchivesDropdown();
 	} );
 }() );

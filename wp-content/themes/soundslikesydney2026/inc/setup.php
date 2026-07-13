@@ -55,6 +55,7 @@ function sls2026_setup() {
 
 	// Image sizes for the various card slots in the homepage grid.
 	add_image_size( 'sls2026-hero', 820, 560, true );        // Big hero feature.
+	add_image_size( 'sls2026-single-hero', 1600, 640, true ); // Full-bleed single-post banner.
 	add_image_size( 'sls2026-feature', 400, 300, true );     // Secondary features.
 	add_image_size( 'sls2026-card', 520, 340, true );        // Recent/latest cards.
 	add_image_size( 'sls2026-thumb', 120, 90, true );        // Trending list thumbs.
