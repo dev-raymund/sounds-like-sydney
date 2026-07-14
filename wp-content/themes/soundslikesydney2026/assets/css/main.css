@@ -605,6 +605,52 @@ body.sls-search-open { overflow: hidden; }
 .sls-hitem__thumb { width: 90px; height: 72px; }
 .sls-hitem__thumb img { width: 90px; height: 72px; object-fit: cover; }
 
+/* Right: "Upcoming Events" list (mirrors the TEC events widget) */
+.sls-hero__events { align-self: start; }
+.sls-hero__events-title {
+	font-family: var(--sls-font-display);
+	font-size: clamp(20px, 2.4vw, 24px);
+	font-weight: 700;
+	color: var(--sls-color-accent);
+	margin: 0 0 18px;
+}
+.sls-hevents { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 24px; }
+.sls-hevent { display: grid; grid-template-columns: 48px 1fr; gap: 18px; align-items: start; }
+/* Date block — matches the /shows/ page: accent day-of-week + month, ink day. */
+.sls-hevent__date { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; line-height: 1; color: var(--sls-color-accent); }
+.sls-hevent__dow,
+.sls-hevent__mon {
+	font-family: var(--sls-font-sans);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+}
+.sls-hevent__day { font-family: var(--sls-font-display); font-size: 34px; font-weight: 700; line-height: 1; color: var(--sls-color-ink); }
+.sls-hevent__time {
+	display: block;
+	font-family: var(--sls-font-sans);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+	color: var(--sls-color-accent);
+	margin-bottom: 5px;
+}
+.sls-hevent__title { font-size: 17px; line-height: 1.3; margin: 0; }
+.sls-hevent__title a { color: var(--sls-color-ink); }
+.sls-hevent__title a:hover { color: var(--sls-color-accent); }
+.sls-hevents__more {
+	display: inline-block;
+	font-family: var(--sls-font-sans);
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+	color: var(--sls-color-accent);
+}
+.sls-hevents__more:hover { color: var(--sls-color-ink); }
+
 /* Editor's Choice numbered row */
 .sls-editors__grid {
 	list-style: none;
@@ -1174,7 +1220,8 @@ body.sls-search-open { overflow: hidden; }
 	.sls-hero__grid { grid-template-columns: 1fr 1.6fr; grid-template-areas: "side lead" "list list"; }
 	.sls-hero__side { grid-area: side; }
 	.sls-hero__lead { grid-area: lead; }
-	.sls-hero__list { grid-area: list; }
+	.sls-hero__list,
+	.sls-hero__events { grid-area: list; }
 }
 
 @media (min-width: 992px) {

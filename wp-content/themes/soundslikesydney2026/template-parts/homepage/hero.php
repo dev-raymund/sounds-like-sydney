@@ -106,22 +106,74 @@ $sls_media = static function ( $post, $size ) {
 			</div>
 		</article>
 
-		<!-- Right: five compact items -->
-		<ul class="sls-hero__list">
-			<?php foreach ( $sls_right as $sls_post ) : ?>
-				<li>
-					<div class="sls-hitem__body">
-						<?php sls2026_category_list( $sls_post->ID, 2 ); ?>
-						<h4 class="sls-hitem__title">
-							<a href="<?php echo esc_url( get_permalink( $sls_post ) ); ?>"><?php echo esc_html( get_the_title( $sls_post ) ); ?></a>
-						</h4>
-					</div>
-					<a class="sls-hitem__thumb" href="<?php echo esc_url( get_permalink( $sls_post ) ); ?>" tabindex="-1" aria-hidden="true">
-						<?php $sls_media( $sls_post, 'sls2026-thumb' ); ?>
-					</a>
-				</li>
-			<?php endforeach; ?>
-		</ul>
+		<!-- Right: upcoming events (falls back to compact posts) -->
+		<?php
+		$sls_ev = array();
+		if ( post_type_exists( 'tribe_events' ) ) {
+			$sls_ev = get_posts(
+				array(
+					'post_type'      => 'tribe_events',
+					'post_status'    => 'publish',
+					'posts_per_page' => 5,
+					'meta_key'       => '_EventStartDate', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'orderby'        => 'meta_value',
+					'order'          => 'ASC',
+					'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+						array(
+							'key'     => '_EventStartDate',
+							'value'   => current_time( 'Y-m-d H:i:s' ),
+							'compare' => '>=',
+							'type'    => 'DATETIME',
+						),
+					),
+				)
+			);
+		}
+		?>
+		<?php if ( $sls_ev ) : ?>
+			<aside class="sls-hero__events" aria-label="<?php esc_attr_e( 'Upcoming events', 'soundslikesydney2026' ); ?>">
+				<h3 class="sls-hero__events-title"><?php esc_html_e( 'Upcoming Events', 'soundslikesydney2026' ); ?></h3>
+				<ul class="sls-hevents">
+					<?php
+					foreach ( $sls_ev as $sls_event ) :
+						$sls_eid    = $sls_event->ID;
+						$sls_allday = function_exists( 'tribe_event_is_all_day' ) && tribe_event_is_all_day( $sls_eid );
+						$sls_link   = get_permalink( $sls_eid );
+						?>
+						<li class="sls-hevent">
+							<a class="sls-hevent__date" href="<?php echo esc_url( $sls_link ); ?>" tabindex="-1" aria-hidden="true">
+								<span class="sls-hevent__dow"><?php echo esc_html( tribe_get_start_date( $sls_eid, false, 'D' ) ); ?></span>
+								<span class="sls-hevent__day"><?php echo esc_html( tribe_get_start_date( $sls_eid, false, 'j' ) ); ?></span>
+								<span class="sls-hevent__mon"><?php echo esc_html( tribe_get_start_date( $sls_eid, false, 'M' ) ); ?></span>
+							</a>
+							<div class="sls-hevent__body">
+								<span class="sls-hevent__time"><?php echo esc_html( $sls_allday ? __( 'All day', 'soundslikesydney2026' ) : tribe_get_start_date( $sls_eid, false, 'g:i a' ) ); ?></span>
+								<h4 class="sls-hevent__title"><a href="<?php echo esc_url( $sls_link ); ?>"><?php echo esc_html( get_the_title( $sls_eid ) ); ?></a></h4>
+							</div>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+				<?php if ( function_exists( 'tribe_get_events_link' ) ) : ?>
+					<a class="sls-hevents__more" href="<?php echo esc_url( tribe_get_events_link() ); ?>"><?php esc_html_e( 'View Calendar', 'soundslikesydney2026' ); ?></a>
+				<?php endif; ?>
+			</aside>
+		<?php else : ?>
+			<ul class="sls-hero__list">
+				<?php foreach ( $sls_right as $sls_post ) : ?>
+					<li>
+						<div class="sls-hitem__body">
+							<?php sls2026_category_list( $sls_post->ID, 2 ); ?>
+							<h4 class="sls-hitem__title">
+								<a href="<?php echo esc_url( get_permalink( $sls_post ) ); ?>"><?php echo esc_html( get_the_title( $sls_post ) ); ?></a>
+							</h4>
+						</div>
+						<a class="sls-hitem__thumb" href="<?php echo esc_url( get_permalink( $sls_post ) ); ?>" tabindex="-1" aria-hidden="true">
+							<?php $sls_media( $sls_post, 'sls2026-thumb' ); ?>
+						</a>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		<?php endif; ?>
 
 	</div>
 </section>
