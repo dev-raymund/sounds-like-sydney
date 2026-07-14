@@ -1305,14 +1305,14 @@ body.sls-search-open { overflow: hidden; }
 .sls-page-hero { position: relative; overflow: hidden; }
 .sls-page-hero__img {
 	width: 100%;
-	height: clamp(260px, 42vw, 480px);
+	height: clamp(200px, 26vw, 340px);
 	object-fit: cover;
 }
 .sls-page-hero--placeholder {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	min-height: clamp(260px, 42vw, 480px);
+	min-height: clamp(200px, 26vw, 340px);
 	text-align: center;
 	color: #fff;
 	background:
