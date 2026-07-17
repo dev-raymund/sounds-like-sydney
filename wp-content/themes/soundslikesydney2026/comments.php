@@ -28,8 +28,8 @@ if ( post_password_required() ) {
 			<?php
 			wp_list_comments(
 				array(
-					'style'      => 'ol',
-					'short_ping' => true,
+					'style'       => 'ol',
+					'short_ping'  => true,
 					'avatar_size' => 48,
 				)
 			);
@@ -51,6 +51,25 @@ if ( post_password_required() ) {
 
 	<?php endif; ?>
 
-	<?php comment_form(); ?>
+	<?php
+	comment_form(
+		array(
+			'class_form'         => 'comment-form sls-comment-form',
+			'class_submit'       => 'submit sls-comment-form__submit',
+			'title_reply'        => esc_html__( 'Leave a comment', 'soundslikesydney2026' ),
+			/* translators: %s: comment author name. */
+			'title_reply_to'     => esc_html__( 'Reply to %s', 'soundslikesydney2026' ),
+			'cancel_reply_link'  => esc_html__( 'Cancel reply', 'soundslikesydney2026' ),
+			'label_submit'       => esc_html__( 'Post comment', 'soundslikesydney2026' ),
+			'title_reply_before' => '<h2 id="reply-title" class="comment-reply-title">',
+			'title_reply_after'  => '</h2>',
+			'comment_field'      => sprintf(
+				'<p class="comment-form-comment"><label for="comment">%1$s <span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="6" maxlength="65525" required="required" placeholder="%2$s"></textarea></p>',
+				esc_html__( 'Comment', 'soundslikesydney2026' ),
+				esc_attr__( 'Share your thoughts on this story&hellip;', 'soundslikesydney2026' )
+			),
+		)
+	);
+	?>
 
 </div>

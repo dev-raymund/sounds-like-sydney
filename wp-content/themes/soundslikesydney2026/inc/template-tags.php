@@ -210,6 +210,23 @@ if ( ! function_exists( 'sls2026_social_icon_svg' ) ) {
 	}
 }
 
+if ( ! function_exists( 'sls2026_share_url' ) ) {
+	/**
+	 * Build a share-intent URL for the current post.
+	 *
+	 * @param string $network 'facebook' or 'x'.
+	 * @return string
+	 */
+	function sls2026_share_url( $network ) {
+		$url   = rawurlencode( get_permalink() );
+		$title = rawurlencode( get_the_title() );
+		if ( 'x' === $network ) {
+			return "https://x.com/intent/tweet?url={$url}&text={$title}";
+		}
+		return "https://www.facebook.com/sharer/sharer.php?u={$url}";
+	}
+}
+
 if ( ! function_exists( 'sls2026_social_links' ) ) {
 	/**
 	 * Render the "social" menu location as icon links (optionally labelled).
